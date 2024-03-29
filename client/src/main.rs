@@ -1,5 +1,8 @@
 mod commands;
+mod event_handler;
+mod events;
 use commands::ping;
+use event_handler::event_handler;
 use poise::serenity_prelude::{self as serenity, GatewayIntents};
 use std::env;
 use tokio::signal::unix;
@@ -21,6 +24,9 @@ async fn main() {
             })
         })
         .options(poise::FrameworkOptions {
+            event_handler: |ctx, event, framework, data| {
+                Box::pin(event_handler(ctx, event, framework, data))
+            },
             commands: vec![ping::ping()],
             ..Default::default()
         })
