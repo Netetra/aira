@@ -1,6 +1,7 @@
 mod commands;
 mod event_handler;
 mod events;
+mod util;
 use commands::ping;
 use event_handler::event_handler;
 use poise::serenity_prelude::{self as serenity, GatewayIntents};
@@ -15,7 +16,7 @@ struct Data;
 #[tokio::main]
 async fn main() {
     let token = env::var("DISCORD_BOT_TOKEN").expect("bot token not set.");
-    let intents = GatewayIntents::non_privileged();
+    let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
     let framework = poise::Framework::builder()
         .setup(move |ctx, _ready, framework| {
             Box::pin(async move {
