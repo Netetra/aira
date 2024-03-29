@@ -191,9 +191,11 @@ dependencies = [
 
 [[package]]
 name = "client"
-version = "0.1.0"
+version = "0.3.0"
 dependencies = [
+ "once_cell",
  "poise",
+ "regex",
  "rstest",
  "tokio",
 ]
