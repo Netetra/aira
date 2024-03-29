@@ -1,4 +1,10 @@
-use crate::{events::ready::ready, Data, Error};
+use crate::{
+    events::{
+        message_link_preview::{message_link_preview, MessageLink},
+        ready::ready,
+    },
+    Data, Error,
+};
 use poise::serenity_prelude::{self as serenity, FullEvent};
 
 pub async fn event_handler(
@@ -7,8 +13,17 @@ pub async fn event_handler(
     _framework: poise::FrameworkContext<'_, Data, Error>,
     _data: &Data,
 ) -> Result<(), Error> {
-    if let FullEvent::Ready { data_about_bot } = event {
-        ready(ctx, data_about_bot);
+    match event {
+        FullEvent::Ready { data_about_bot } => ready(ctx, data_about_bot),
+        FullEvent::Message { new_message } => {
+            if new_message.author.bot {
+                return Ok(());
+            }
+            if let Some(message_links) = MessageLink::find_all(&new_message.content) {
+                message_link_preview(ctx, new_message, message_links).await;
+            }
+        }
+        _ => {}
     }
     Ok(())
 }

@@ -193,7 +193,9 @@ dependencies = [
 name = "client"
 version = "0.2.0"
 dependencies = [
+ "once_cell",
  "poise",
+ "regex",
  "rstest",
  "tokio",
 ]
