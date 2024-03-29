@@ -24,6 +24,12 @@ jobs:
           cargo fmt --all -- --check
           cargo clippy
 
+      - name: API Check
+        run: |
+          cd api
+          cargo fmt --all -- --check
+          cargo clippy
+
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -39,5 +45,11 @@ jobs:
       - name: Client Test
         run: |
           cd client
+          cargo test
+          cargo check
+
+      - name: API Test
+        run: |
+          cd api
           cargo test
           cargo check

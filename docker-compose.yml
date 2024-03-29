@@ -9,6 +9,14 @@ services:
       - .env.client
     networks:
       - aira-network
+  api:
+    container_name: api
+    build: ./api
+    restart: always
+    env_file:
+      - .env.api
+    networks:
+      - aira-network
 
 networks:
   aira-network:
