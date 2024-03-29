@@ -1,4 +1,5 @@
 mod app;
+mod entity;
 
 use std::{
     env,
