@@ -12,9 +12,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup Toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+
+      - name: Client Check
+        run: |
+          cd client
+          cargo fmt --all -- --check
+          cargo clippy
+
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Setup Toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+
+      - name: Client Test
+        run: |
+          cd client
+          cargo test
+          cargo check
